@@ -20,6 +20,7 @@ package com.mto.arquillian.demo;
 
 import com.mto.arquillian.demo.complex.RegisterServlet;
 import junit.framework.TestCase;
+import qualifier.Chrome;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -40,9 +41,10 @@ import java.net.URL;
  * @date 11/2/12
  */
 @RunWith(Arquillian.class)
-public class WebDriverTest extends TestCase
+public class ChromeWebDriverTest extends TestCase
 {
    @Drone
+   @Chrome
    WebDriver driver;
 
    @Deployment
@@ -72,6 +74,6 @@ public class WebDriverTest extends TestCase
       WebElement form = driver.findElement(By.tagName("form"));
       form.findElement(By.name("username")).sendKeys("gatein");
       form.submit();
-      assertEquals("You have registered succesfully under the name: gatein", driver.getPageSource());
+      assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\"><head></head><body><pre>You have registered succesfully under the name: gatein</pre></body></html>", driver.getPageSource());
    }
 }
